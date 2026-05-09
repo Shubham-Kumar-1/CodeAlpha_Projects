@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus | Real-Time Collaboration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Lobby Screen -->
+        <div id="lobby" class="screen active">
+            <div class="lobby-content glass">
+                <div class="logo">
+                    <i data-lucide="zap" class="logo-icon"></i>
+                    <h1>Nexus</h1>
+                </div>
+                <p>High-fidelity real-time collaboration</p>
+                <div class="profile-preview">
+                    <img id="avatar-preview" src="https://api.dicebear.com/7.x/bottts/svg?seed=Nexus" alt="Avatar">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Enter your name" autocomplete="off">
+                    <input type="text" id="room-id" placeholder="Room ID (optional)" autocomplete="off">
+                </div>
+                <button id="join-btn" class="primary-btn">
+                    <span>Join Workspace</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+            <div class="background-blobs">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
+            </div>
+        </div>
+
+        <!-- Main Conference Screen -->
+        <div id="main-conference" class="screen">
+            <div class="layout">
+                <!-- Video Grid Area -->
+                <main class="video-container">
+                    <div id="video-grid">
+                        <!-- Local Video -->
+                        <div class="video-wrapper local" id="local-video-wrapper">
+                            <video id="local-video" muted autoplay playsinline></video>
+                            <div class="video-label">You</div>
+                        </div>
+                    </div>
+                </main>
+
+                <!-- Sidebar (Chat & Files) -->
+                <aside class="sidebar glass">
+                    <div class="sidebar-tabs">
+                        <button class="tab-btn active" data-tab="chat">Chat</button>
+                        <button class="tab-btn" data-tab="files">Files</button>
+                        <button class="tab-btn" data-tab="users">People</button>
+                    </div>
+                    <div class="tab-content chat-content active" id="chat-tab">
+                        <div id="messages" class="messages-list"></div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-message" placeholder="Type a message..." autocomplete="off">
+                            <button id="send-msg-btn">
+                                <i data-lucide="send"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content files-content" id="files-tab">
+                        <div id="files-list" class="files-list"></div>
+                        <label for="file-input" class="file-upload-btn">
+                            <i data-lucide="upload"></i>
+                            <span>Upload File</span>
+                            <input type="file" id="file-input" hidden>
+                        </label>
+                    </div>
+                    <div class="tab-content users-content" id="users-tab">
+                        <div id="participant-list" class="participant-list"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Floating Whiteboard -->
+            <div id="whiteboard-container" class="glass whiteboard-modal">
+                <div class="whiteboard-header">
+                    <h3>Collaborative Whiteboard</h3>
+                    <div class="whiteboard-controls">
+                        <input type="color" id="whiteboard-color" value="#6366f1">
+                        <input type="range" id="whiteboard-size" min="1" max="20" value="5">
+                        <button id="clear-whiteboard-btn" title="Clear">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                        <button id="close-whiteboard-btn" title="Close">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                </div>
+                <canvas id="whiteboard-canvas"></canvas>
+            </div>
+
+            <!-- Toolbar -->
+            <nav class="toolbar glass">
+                <div class="toolbar-left">
+                    <div class="room-info">
+                        <span class="room-status-dot"></span>
+                        <span id="display-room-id">Room: Lobby</span>
+                        <button id="copy-room-btn" title="Copy Room ID" class="mini-btn">
+                            <i data-lucide="copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="toolbar-center">
+                    <button class="tool-btn" id="mic-toggle" title="Toggle Microphone">
+                        <i data-lucide="mic"></i>
+                    </button>
+                    <button class="tool-btn" id="cam-toggle" title="Toggle Camera">
+                        <i data-lucide="video"></i>
+                    </button>
+                    <button class="tool-btn" id="screen-share-btn" title="Share Screen">
+                        <i data-lucide="monitor"></i>
+                    </button>
+                    <button class="tool-btn" id="hand-raise-btn" title="Raise Hand">
+                        <i data-lucide="hand"></i>
+                    </button>
+                    <button class="tool-btn" id="invite-btn" title="Invite Others">
+                        <i data-lucide="user-plus"></i>
+                    </button>
+                    <div class="emoji-picker-container">
+                        <button class="tool-btn" id="emoji-btn" title="Send Reaction">
+                            <i data-lucide="smile"></i>
+                        </button>
+                        <div class="emoji-menu glass">
+                            <button class="emoji-item">❤️</button>
+                            <button class="emoji-item">🔥</button>
+                            <button class="emoji-item">👏</button>
+                            <button class="emoji-item">😂</button>
+                            <button class="emoji-item">😮</button>
+                        </div>
+                    </div>
+                    <button class="tool-btn" id="whiteboard-toggle" title="Open Whiteboard">
+                        <i data-lucide="pen-tool"></i>
+                    </button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="tool-btn danger" id="leave-btn" title="Leave Session">
+                        <i data-lucide="phone-off"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
