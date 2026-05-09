@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusSocial - Connect & Share</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div id="app">
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <div class="auth-card glass">
+                <h1>Nexus<span>Social</span></h1>
+                <p id="auth-subtitle">Join the futuristic community</p>
+                <form id="auth-form">
+                    <div class="input-group" id="username-group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" placeholder="Username">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" id="auth-btn">Sign In</button>
+                </form>
+                <p class="toggle-auth">Don't have an account? <span id="toggle-link">Sign Up</span></p>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="main-screen" class="screen hidden">
+            <nav class="sidebar glass">
+                <div class="logo">N<span>S</span></div>
+                <ul class="nav-links">
+                    <li class="active" data-view="feed"><i class="fa-solid fa-house"></i></li>
+                    <li data-view="explore"><i class="fa-solid fa-compass"></i></li>
+                    <li data-view="notifications"><i class="fa-solid fa-bell"></i></li>
+                    <li data-view="profile"><i class="fa-solid fa-user"></i></li>
+                </ul>
+                <div class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></div>
+            </nav>
+
+            <main class="content-area">
+                <header class="top-bar glass">
+                    <h2 id="view-title">Home Feed</h2>
+                    <div class="user-pill glass" id="current-user-pill">
+                        <img src="" alt="Avatar" id="nav-avatar">
+                        <span id="nav-username">Username</span>
+                    </div>
+                </header>
+
+                <div id="feed-view" class="view">
+                    <div class="post-creator glass">
+                        <textarea id="post-content" placeholder="What's on your mind?"></textarea>
+                        <div class="creator-actions">
+                            <label for="post-image" class="image-upload-label">
+                                <i class="fa-solid fa-image"></i> Add Image
+                                <input type="file" id="post-image" accept="image/*" hidden>
+                            </label>
+                            <button id="submit-post">Post</button>
+                        </div>
+                    </div>
+                    <div id="posts-container">
+                        <!-- Posts injected here -->
+                    </div>
+                </div>
+
+                <div id="profile-view" class="view hidden">
+                    <div class="profile-header glass">
+                        <div class="profile-info">
+                            <img src="" alt="Profile" id="profile-pic-large">
+                            <div class="profile-text">
+                                <h1 id="profile-username">Username</h1>
+                                <p id="profile-bio">Cyber-traveler and tech enthusiast.</p>
+                                <div class="profile-stats">
+                                    <span><strong id="stat-followers">0</strong> Followers</span>
+                                    <span><strong id="stat-following">0</strong> Following</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="follow-btn" class="glass">Follow</button>
+                    </div>
+                    <div id="user-posts-container">
+                        <!-- User posts injected here -->
+                    </div>
+                </div>
+            </main>
+
+            <aside class="right-sidebar">
+                <div class="suggestions glass">
+                    <h3>Who to follow</h3>
+                    <div id="suggestions-list">
+                        <!-- Suggestions injected here -->
+                    </div>
+                </div>
+                <div class="trending glass">
+                    <h3>Trending</h3>
+                    <p>#FutureTech</p>
+                    <p>#NexusNetwork</p>
+                    <p>#Web3Social</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="comment-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h3>Comments</h3>
+            <div id="comments-list"></div>
+            <div class="comment-input">
+                <input type="text" id="new-comment" placeholder="Add a comment...">
+                <button id="submit-comment">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
